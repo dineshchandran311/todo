@@ -2,7 +2,7 @@ import { Modal } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import { React, useState} from 'react';
-import firebase from '../firebase';
+import { db } from '../firebase';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -11,6 +11,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
 import {TextField} from '@mui/material';
+import { useAuth } from '../contexts/AuthProvider';
+
 
 function Todo(props) {
     
@@ -18,12 +20,13 @@ function Todo(props) {
     const [input, setInput ] = useState('');
     const [description, setDescription] = useState('');
     const [open, setOpen] = useState(false);
-
+    const { currentUser } = useAuth();
+    
     const editTodo = (e) => {
         e.preventDefault();
         if(input && description)
         {
-            firebase.firestore().collection('todos').doc(props.todo.id).set({
+            db.collection("user").doc(currentUser.uid).collection("todos").doc(props.todo.id).set({
             todo: input,
             description: description
             },{merge : true});
@@ -37,7 +40,7 @@ function Todo(props) {
         setOpen(true);
     }
 
-    const deleteVal =  () => firebase.firestore().collection('todos').doc(props.todo.id).delete()
+    const deleteVal =  () => db.collection("user").doc(currentUser.uid).collection("todos").doc(props.todo.id).delete()
 
     return (
         <div key={props.todo.id}>
