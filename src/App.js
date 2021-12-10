@@ -6,6 +6,7 @@ import { AuthProvider } from "./contexts/AuthProvider";
 
 import Main from "./components/MainComponent";
 import Login from "./components/login";
+import Header from "./components/Header";
 
 
 function App() {
@@ -13,9 +14,10 @@ function App() {
     <div style={{ fontFamily: 'Avenir' }}>
        <Router> 
          <AuthProvider> 
+            <Header/>
             <Switch> 
+                <Route exact path="/" component={Login} />
                 <Route path="/todo" component={Main}/>
-                <Route path="/" component={Login} />
            </Switch>
         </AuthProvider>
         </Router>

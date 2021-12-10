@@ -16,11 +16,15 @@ export function AuthProvider({children}) {
     const history = useHistory();
 
     function Google(){
-        return auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider())
+        return auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
     }
 
     function Facebook(){
-        return auth.signInWithRedirect(new firebase.auth.FacebookAuthProvider())
+        return auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
+    }
+
+    function currentUserSetter(user){
+        setCurrentUser(user);
     }
 
     useEffect(() =>{
@@ -36,7 +40,7 @@ export function AuthProvider({children}) {
         })
     },[currentUser,history])
  
-    const value = { currentUser, Facebook, Google};
+    const value = { currentUser, Facebook, Google, currentUserSetter};
 
     return (
         <AuthContext.Provider value={value}>

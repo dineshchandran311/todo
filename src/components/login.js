@@ -21,7 +21,7 @@ export default function Login() {
             console.log("error");
         }
         console.log(currentUser);
-        history.push("\todo");
+        history.push("/todo");
     }
     
     async function facebookf(){
@@ -31,7 +31,7 @@ export default function Login() {
         catch{
             console.log("error");
         }
-        history.push("\todo");
+        history.push("/todo");
     }
 
     return (
